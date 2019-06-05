@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * File: crontab.xml
+ *
+ * @copyright Copyright (C) 2019 Lizard Media (http://lizardmedia.pl)
+ */
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Cron:etc/crontab.xsd">
+    <group id="default">
+        <job name="paylane_notification_manual_handle" instance="LizardMedia\PayLane\Cron\Notification\Handle" method="execute">
+            <schedule>*/15 * * * *</schedule>
+        </job>
+    </group>
+</config>

@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * File: di.xml
+ *
+ * @copyright Copyright (C) 2019 Lizard Media (http://lizardmedia.pl)
+ */
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+    <!-- Constructor arguments injection section -->
+    <type name="Magento\Checkout\Model\CompositeConfigProvider">
+        <arguments>
+            <argument name="configProviders" xsi:type="array">
+                <item name="paylane" xsi:type="object">LizardMedia\PayLane\Model\Checkout\ConfigProvider</item>
+            </argument>
+        </arguments>
+    </type>
+    <!-- End of constructor arguments injection section -->
+
+</config>

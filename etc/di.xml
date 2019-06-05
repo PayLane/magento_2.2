@@ -1,0 +1,344 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * File: di.xml
+ *
+ * @copyright Copyright (C) 2019 Lizard Media (http://lizardmedia.pl)
+ */
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+    <!-- API section -->
+    <preference for="LizardMedia\PayLane\Api\Adapter\PayLaneRestClientFactoryInterface"
+                type="LizardMedia\PayLane\Model\Adapter\PayLaneRestClientFactory" />
+    <preference for="LizardMedia\PayLane\Api\Config\Methods\ApplePayConfigProviderInterface"
+                type="LizardMedia\PayLane\Model\Config\Methods\ApplePayConfigProvider" />
+    <preference for="LizardMedia\PayLane\Api\Config\Methods\BankTransferConfigProviderInterface"
+                type="LizardMedia\PayLane\Model\Config\Methods\BankTransferConfigProvider" />
+    <preference for="LizardMedia\PayLane\Api\Config\Methods\CreditCardConfigProviderInterface"
+                type="LizardMedia\PayLane\Model\Config\Methods\CreditCardConfigProvider" />
+    <preference for="LizardMedia\PayLane\Api\Config\Methods\DirectDebitConfigProviderInterface"
+                type="LizardMedia\PayLane\Model\Config\Methods\DirectDebitConfigProvider" />
+    <preference for="LizardMedia\PayLane\Api\Config\Methods\IdealConfigProviderInterface"
+                type="LizardMedia\PayLane\Model\Config\Methods\IdealConfigProvider" />
+    <preference for="LizardMedia\PayLane\Api\Config\Methods\PayPalConfigProviderInterface"
+                type="LizardMedia\PayLane\Model\Config\Methods\PayPalConfigProvider" />
+    <preference for="LizardMedia\PayLane\Api\Config\Methods\SecureFormConfigProviderInterface"
+                type="LizardMedia\PayLane\Model\Config\Methods\SecureFormConfigProvider" />
+    <preference for="LizardMedia\PayLane\Api\Config\Methods\SofortBankingConfigProviderInterface"
+                type="LizardMedia\PayLane\Model\Config\Methods\SofortBankingConfigProvider" />
+    <preference for="LizardMedia\PayLane\Api\Config\GeneralAuthenticationConfigProviderInterface"
+                type="LizardMedia\PayLane\Model\Config\GeneralAuthenticationConfigProvider" />
+    <preference for="LizardMedia\PayLane\Api\Config\GeneralConfigProviderInterface"
+                type="LizardMedia\PayLane\Model\Config\GeneralConfigProvider" />
+    <preference for="LizardMedia\PayLane\Api\Config\NotificationAuthenticationConfigProviderInterface"
+                type="LizardMedia\PayLane\Model\Config\NotificationAuthenticationConfigProvider" />
+    <preference for="LizardMedia\PayLane\Api\Config\NotificationConfigProviderInterface"
+                type="LizardMedia\PayLane\Model\Config\NotificationConfigProvider" />
+    <!-- End of API section -->
+
+    <!-- Payment method facade configuration section -->
+    <virtualType name="PayLaneFacade" type="Magento\Payment\Model\Method\Adapter">
+        <arguments>
+            <argument name="code" xsi:type="const">LizardMedia\PayLane\Model\Config\GeneralConfigProvider::CODE_PAYLANE</argument>
+            <argument name="formBlockType" xsi:type="string">LizardMedia\PayLane\Block\Form</argument>
+            <argument name="infoBlockType" xsi:type="string">LizardMedia\PayLane\Block\Info</argument>
+            <argument name="valueHandlerPool" xsi:type="object">PayLaneValueHandlerPool</argument>
+            <argument name="validatorPool" xsi:type="object">Magento\Payment\Gateway\Validator\ValidatorPool</argument>
+            <argument name="commandPool" xsi:type="object">PayLaneCommandPool</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="PayLaneSecureFormFacade" type="PayLaneFacade">
+        <arguments>
+            <argument name="code" xsi:type="const">LizardMedia\PayLane\Model\Config\Methods\SecureFormConfigProvider::CODE_SECURE_FORM</argument>
+            <argument name="valueHandlerPool" xsi:type="object">PayLaneSecureFormValueHandlerPool</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="PayLaneCreditCardFacade" type="PayLaneFacade">
+        <arguments>
+            <argument name="code" xsi:type="const">LizardMedia\PayLane\Model\Config\Methods\CreditCardConfigProvider::CODE_CREDIT_CARD</argument>
+            <argument name="valueHandlerPool" xsi:type="object">PayLaneCreditCardValueHandlerPool</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="PayLanePayPalFacade" type="PayLaneFacade">
+        <arguments>
+            <argument name="code" xsi:type="const">LizardMedia\PayLane\Model\Config\Methods\PayPalConfigProvider::CODE_PAYPAL</argument>
+            <argument name="valueHandlerPool" xsi:type="object">PayLanePayPalValueHandlerPool</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="PayLaneSofortFacade" type="PayLaneFacade">
+        <arguments>
+            <argument name="code" xsi:type="const">LizardMedia\PayLane\Model\Config\Methods\SofortBankingConfigProvider::CODE_SOFORT</argument>
+            <argument name="valueHandlerPool" xsi:type="object">PayLaneSofortValueHandlerPool</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="PayLaneDirectDebitFacade" type="PayLaneFacade">
+        <arguments>
+            <argument name="code" xsi:type="const">LizardMedia\PayLane\Model\Config\Methods\DirectDebitConfigProvider::CODE_DIRECT_DEBIT</argument>
+            <argument name="valueHandlerPool" xsi:type="object">PayLaneDirectDebitValueHandlerPool</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="PayLaneBankTransferFacade" type="PayLaneFacade">
+        <arguments>
+            <argument name="code" xsi:type="const">LizardMedia\PayLane\Model\Config\Methods\BankTransferConfigProvider::CODE_BANK_TRANSFER</argument>
+            <argument name="valueHandlerPool" xsi:type="object">PayLaneBankTransferValueHandlerPool</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="PayLaneApplePayFacade" type="PayLaneFacade">
+        <arguments>
+            <argument name="code" xsi:type="const">LizardMedia\PayLane\Model\Config\Methods\ApplePayConfigProvider::CODE_APPLE_PAY</argument>
+            <argument name="valueHandlerPool" xsi:type="object">PayLaneApplePayValueHandlerPool</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="PayLaneIdealFacade" type="PayLaneFacade">
+        <arguments>
+            <argument name="code" xsi:type="const">LizardMedia\PayLane\Model\Config\Methods\IdealConfigProvider::CODE_IDEAL</argument>
+            <argument name="valueHandlerPool" xsi:type="object">PayLaneIdealValueHandlerPool</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Virtual\PayLane\Gateway\Config\Config" type="Magento\Payment\Gateway\Config\Config">
+        <arguments>
+            <argument name="methodCode" xsi:type="const">LizardMedia\PayLane\Model\Config\GeneralConfigProvider::CODE_PAYLANE</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Virtual\PayLane\Gateway\Config\SecureForm\Config" type="Magento\Payment\Gateway\Config\Config">
+        <arguments>
+            <argument name="methodCode" xsi:type="const">LizardMedia\PayLane\Model\Config\Methods\SecureFormConfigProvider::CODE_SECURE_FORM</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Virtual\PayLane\Gateway\Config\CreditCard\Config" type="Magento\Payment\Gateway\Config\Config">
+        <arguments>
+            <argument name="methodCode" xsi:type="const">LizardMedia\PayLane\Model\Config\Methods\CreditCardConfigProvider::CODE_CREDIT_CARD</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Virtual\PayLane\Gateway\Config\PayPal\Config" type="Magento\Payment\Gateway\Config\Config">
+        <arguments>
+            <argument name="methodCode" xsi:type="const">LizardMedia\PayLane\Model\Config\Methods\PayPalConfigProvider::CODE_PAYPAL</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Virtual\PayLane\Gateway\Config\Sofort\Config" type="Magento\Payment\Gateway\Config\Config">
+        <arguments>
+            <argument name="methodCode" xsi:type="const">LizardMedia\PayLane\Model\Config\Methods\SofortBankingConfigProvider::CODE_SOFORT</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Virtual\PayLane\Gateway\Config\DirectDebit\Config" type="Magento\Payment\Gateway\Config\Config">
+        <arguments>
+            <argument name="methodCode" xsi:type="const">LizardMedia\PayLane\Model\Config\Methods\DirectDebitConfigProvider::CODE_DIRECT_DEBIT</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Virtual\PayLane\Gateway\Config\BankTransfer\Config" type="Magento\Payment\Gateway\Config\Config">
+        <arguments>
+            <argument name="methodCode" xsi:type="const">LizardMedia\PayLane\Model\Config\Methods\BankTransferConfigProvider::CODE_BANK_TRANSFER</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Virtual\PayLane\Gateway\Config\ApplePay\Config" type="Magento\Payment\Gateway\Config\Config">
+        <arguments>
+            <argument name="methodCode" xsi:type="const">LizardMedia\PayLane\Model\Config\Methods\ApplePayConfigProvider::CODE_APPLE_PAY</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Virtual\PayLane\Gateway\Config\Ideal\Config" type="Magento\Payment\Gateway\Config\Config">
+        <arguments>
+            <argument name="methodCode" xsi:type="const">LizardMedia\PayLane\Model\Config\Methods\IdealConfigProvider::CODE_IDEAL</argument>
+        </arguments>
+    </virtualType>
+    <!-- End of payment method facade configuration section -->
+
+    <!-- PayLane value handler configuration section -->
+    <virtualType name="PayLaneValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="default" xsi:type="string">PayLaneConfigValueHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="PayLaneSecureFormValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="default" xsi:type="string">PayLaneSecureFormConfigValueHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="PayLaneCreditCardValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="default" xsi:type="string">PayLaneCreditCardConfigValueHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="PayLanePayPalValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="default" xsi:type="string">PayLanePayPalConfigValueHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="PayLaneSofortValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="default" xsi:type="string">PayLaneSofortConfigValueHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="PayLaneDirectDebitValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="default" xsi:type="string">PayLaneDirectDebitConfigValueHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="PayLaneBankTransferValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="default" xsi:type="string">PayLaneBankTransferConfigValueHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="PayLaneApplePayValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="default" xsi:type="string">PayLaneApplePayConfigValueHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="PayLaneIdealValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="default" xsi:type="string">PayLaneIdealConfigValueHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="PayLaneConfigValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+        <arguments>
+            <argument name="configInterface" xsi:type="object">Virtual\PayLane\Gateway\Config\Config</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="PayLaneSecureFormConfigValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+        <arguments>
+            <argument name="configInterface" xsi:type="object">Virtual\PayLane\Gateway\Config\SecureForm\Config</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="PayLaneCreditCardConfigValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+        <arguments>
+            <argument name="configInterface" xsi:type="object">Virtual\PayLane\Gateway\Config\CreditCard\Config</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="PayLanePayPalConfigValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+        <arguments>
+            <argument name="configInterface" xsi:type="object">Virtual\PayLane\Gateway\Config\PayPal\Config</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="PayLaneSofortConfigValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+        <arguments>
+            <argument name="configInterface" xsi:type="object">Virtual\PayLane\Gateway\Config\Sofort\Config</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="PayLaneDirectDebitConfigValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+        <arguments>
+            <argument name="configInterface" xsi:type="object">Virtual\PayLane\Gateway\Config\DirectDebit\Config</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="PayLaneBankTransferConfigValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+        <arguments>
+            <argument name="configInterface" xsi:type="object">Virtual\PayLane\Gateway\Config\BankTransfer\Config</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="PayLaneApplePayConfigValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+        <arguments>
+            <argument name="configInterface" xsi:type="object">Virtual\PayLane\Gateway\Config\ApplePay\Config</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="PayLaneIdealConfigValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+        <arguments>
+            <argument name="configInterface" xsi:type="object">Virtual\PayLane\Gateway\Config\Ideal\Config</argument>
+        </arguments>
+    </virtualType>
+    <!-- End of PayLane value handler configuration section -->
+
+    <!-- PayLane gateway commands section -->
+    <virtualType name="PayLaneAuthorizeCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+        <arguments>
+            <argument name="requestBuilder" xsi:type="object">Magento\Payment\Gateway\Request\BuilderComposite</argument>
+            <argument name="transferFactory" xsi:type="object">LizardMedia\PayLane\Gateway\Http\TransferFactory</argument>
+            <argument name="client" xsi:type="object">LizardMedia\PayLane\Gateway\Http\Client\TransactionMock</argument>
+        </arguments>
+    </virtualType>
+    <!-- End of PayLane gateway commands section -->
+
+    <!-- PayLane gateway command pool section -->
+    <virtualType name="PayLaneCommandPool" type="Magento\Payment\Gateway\Command\CommandPool">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="authorize" xsi:type="string">PayLaneAuthorizeCommand</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <!-- End of PayLane gateway command pool section -->
+
+    <!-- Custom logger section -->
+    <virtualType name="Virtual\PayLane\Logger\NotificationHandler"
+                 type="Magento\Framework\Logger\Handler\Base">
+        <arguments>
+            <argument name="fileName" xsi:type="string">/var/log/paylane/notification.log</argument>
+            <argument name="loggerType" xsi:type="const">Monolog\Logger::DEBUG</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Virtual\Paylane\Logger\NotificationLogger"
+                 type="Magento\Framework\Logger\Monolog">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="debug" xsi:type="object">Virtual\PayLane\Logger\NotificationHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <!-- End of custom logger section -->
+
+    <!-- Constructor arguments injection -->
+    <type name="LizardMedia\PayLane\Controller\Notification\HandleAuto">
+        <arguments>
+            <argument name="logger" xsi:type="object">Virtual\Paylane\Logger\NotificationLogger</argument>
+        </arguments>
+    </type>
+
+    <type name="LizardMedia\PayLane\Cron\Notification\Handle">
+        <arguments>
+            <argument name="logger" xsi:type="object">Virtual\Paylane\Logger\NotificationLogger</argument>
+        </arguments>
+    </type>
+    <!-- End of constructor arguments injection -->
+
+</config>

@@ -1,0 +1,122 @@
+/**
+ * File: _module.less
+ *
+ * @copyright Copyright (C) 2019 Lizard Media (http://lizardmedia.pl)
+ */
+
+/**
+ * General styles
+ */
+.paylane-method-title {
+  display: flex;
+  align-items: center;
+}
+
+.paylane-method-title > label {
+  display: flex;
+  align-items: center;
+}
+
+.paylane-method-title > label > .img-wrapper {
+  width: 100px;
+  margin-right: 5px;
+  text-align: center;
+}
+
+.paylane-method-title > label > .img-wrapper > img {
+  max-width: 100px;
+  max-height: 50px;
+}
+
+.paylane-method-title > label > span {
+  margin-left: 5px;
+}
+
+/**
+ *  Bank transfer styles
+ */
+.paylane_banktransfer * {
+  box-sizing: border-box;
+}
+
+.paylane_banktransfer .label {
+  margin-bottom: 10px;
+}
+
+.paylane_banktransfer .control {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.paylane_banktransfer .bank-transfer-field {
+  margin-left: 10px;
+  margin-bottom: 10px;
+  flex: 1 0 20%;
+  text-align: center;
+}
+
+.paylane_banktransfer .bank-transfer-field input {
+  position: fixed;
+  opacity: 0;
+}
+
+.paylane_banktransfer .bank-transfer-field label {
+  display: inline-flex;
+  cursor: pointer;
+  opacity: 0.5;
+  transition: 0.2s opacity ease-in-out;
+  width: 150px;
+  height: 100px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.paylane_banktransfer .bank-transfer-field label:hover,
+.paylane_banktransfer .bank-transfer-field input:checked + label {
+  opacity: 1;
+}
+
+.paylane_banktransfer .bank-transfer-field label img {
+  display: block;
+  margin: 0 auto;
+  max-width: 125px;
+  max-height: 50px;
+}
+
+.paylane_banktransfer .bank-transfer-field label span {
+  display: block;
+  width: 100%;
+  font-size: 11px;
+  padding-top: 5px;
+  margin: 0 auto;
+}
+
+/**
+ * Apple Pay styles
+ */
+.apple-pay-button {
+  -webkit-appearance: -apple-pay-button;
+  -apple-pay-button-type: buy;
+  visibility: hidden;
+  display: inline-block;
+  width: 200px;
+  min-height: 30px;
+  border: 1px solid black;
+  background-image: -webkit-named-image(apple-pay-logo-black);
+  background-size: 100% calc(60% + 2px);
+  background-repeat: no-repeat;
+  background-color: white;
+  background-position: 50% 50%;
+  border-radius: 5px;
+  padding: 0px;
+  margin: 5px auto;
+  transition: background-color .15s;
+}
+.apple-pay-button.visible {
+  visibility: visible;
+}
+.apple-pay-button:active {
+  background-color: rgb(152, 152, 152);
+}
